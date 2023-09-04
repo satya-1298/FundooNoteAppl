@@ -1,10 +1,13 @@
 ﻿using CommonLayer.Model;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RepoLayer.Context;
 using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace RepoLayer.Service
@@ -42,6 +45,27 @@ namespace RepoLayer.Service
             {
                 throw;
             }
+        }
+
+        // JWT TOKEN GENERATE:-
+        public string GenerateToken(string Email, long UserId)
+        {
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var secret = Encoding.ASCII.GetBytes(configuration["JwtConfig:key"]);
+            var TokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new[]
+                {
+                    new Claim("UserId", UserId.ToString()),
+                    new Claim(ClaimTypes.Email, Email)
+                }),
+                Expires = DateTime.UtcNow.AddMinutes(30),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(secret), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(TokenDescriptor);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
         }
     }
 }
