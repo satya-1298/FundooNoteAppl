@@ -8,9 +8,4 @@
     <ProjectReference Include="..\RepoLayer\RepoLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Interface\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
