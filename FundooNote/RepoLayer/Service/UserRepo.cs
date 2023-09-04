@@ -7,6 +7,7 @@ using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -66,6 +67,19 @@ namespace RepoLayer.Service
             var token = tokenHandler.CreateToken(TokenDescriptor);
             return new JwtSecurityTokenHandler().WriteToken(token);
 
+        }
+        public string UserLogin(UserLoginModel model)
+        {
+            var result=_fundooContext.User.FirstOrDefault(x=>x.Email== model.Email && x.Password==model.Password);
+            if(result!=null)
+            {
+                var token=GenerateToken(result.Email, result.UserId);
+                return token;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
