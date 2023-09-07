@@ -67,7 +67,11 @@ namespace FundooNotes
                 };
             });
 
-         
+            //Swagger Service Implementation
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v3", new OpenApiInfo { Title = "My API", Version = "v3" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -78,7 +82,12 @@ namespace FundooNotes
                 app.UseDeveloperExceptionPage();
             }
 
-           
+            //MiddleWare Components of Swagger
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v3/swagger.json", "My API V3");
+            });
 
             app.UseHttpsRedirection();
 
