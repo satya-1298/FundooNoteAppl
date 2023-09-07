@@ -57,5 +57,27 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
+        [HttpPut]
+        [Route("Forgot")]
+        public IActionResult UserForGotPass(ForgotPasswordModel passwordModel)
+        {
+            try
+            {
+                var result = userBussiness.ForgotPassword(passwordModel);
+                if(result != null)
+                {
+                    return Ok(new { message = "mail send Successfully ", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Unsuccessful", data = result });
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+    
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using RepoLayer.Context;
 using RepoLayer.Interface;
 using RepoLayer.Service;
@@ -34,8 +35,13 @@ namespace FundooNotes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<FundooContext>(Option=>Option.UseSqlServer(Configuration["ConnectionStrings:DBFundoo"]));
             services.AddControllers();
+
+            //Database Configuration
+            services.AddDbContext<FundooContext>(Option=>Option.UseSqlServer(Configuration["ConnectionStrings:DBFundoo"]));
+            
+
+            //User Configuration
             services.AddTransient<IUserRepo, UserRepo>();
             services.AddTransient<IUserBusiness, UserBussiness>();
 
@@ -60,6 +66,8 @@ namespace FundooNotes
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(token))
                 };
             });
+
+         
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,6 +77,8 @@ namespace FundooNotes
             {
                 app.UseDeveloperExceptionPage();
             }
+
+           
 
             app.UseHttpsRedirection();
 

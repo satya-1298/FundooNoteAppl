@@ -81,5 +81,27 @@ namespace RepoLayer.Service
                 return null;
             }
         }
+        public string ForgotPassword(ForgotPasswordModel model)
+        {
+            try
+            {
+                var result = _fundooContext.User.FirstOrDefault(x => x.Email == model.Email);
+                if (result != null)
+                {
+                    var token = GenerateToken(result.Email, result.UserId);
+                    MSMQ mSMQ = new MSMQ();
+                    mSMQ.SendData2Queue(token);
+                    return token;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
