@@ -1,8 +1,12 @@
 ﻿using BusinessLayer.Interface;
+using BusinessLayer.Services;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RepoLayer.Entity;
+using System.Security.Claims;
 
 namespace FundooNotes.Controllers
 {
@@ -78,6 +82,21 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
-    
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut]
+        [Route("ResetPass")]
+        public IActionResult ResetPassword(ResetPasswordModel resetPassword)
+        {
+            var email = User.FindFirst(ClaimTypes.Email).Value.ToString();
+            var result = userBussiness.ResetPassword(email, resetPassword);
+            if (result != null)
+            {
+                return Ok(new { success = true, message = "Password Changed Successfully"});
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "Password not changed" });
+            }
+        }
     }
 }

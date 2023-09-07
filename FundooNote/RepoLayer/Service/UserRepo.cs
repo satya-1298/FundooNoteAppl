@@ -103,5 +103,27 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        public bool ResetPassword(string email, ResetPasswordModel resetPassword)
+        {
+            try
+            {
+                if (resetPassword.newPassword.Equals(resetPassword.conformPassword))
+                {
+                    var user = _fundooContext.User.Where(x => x.Email == email).FirstOrDefault();
+                    user.Password = resetPassword.conformPassword;
+
+                    _fundooContext.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

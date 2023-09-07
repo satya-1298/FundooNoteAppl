@@ -11,6 +11,6 @@ namespace BusinessLayer.Interface
         public UserEntity UserRegister(UserRegisterModel model);
         public string UserLogin(UserLoginModel model);
         public string ForgotPassword(ForgotPasswordModel forgotPassword);
-
+        public bool ResetPassword(string email, ResetPasswordModel resetPassword);
     }
 }

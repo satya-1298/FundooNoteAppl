@@ -55,6 +55,7 @@ namespace FundooNotes
             })
             .AddJwtBearer(options =>
 
+
             {
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -71,6 +72,28 @@ namespace FundooNotes
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v3", new OpenApiInfo { Title = "My API", Version = "v3" });
+           
+            var securitySchema = new OpenApiSecurityScheme
+            {
+                Description = "Using the Authorization header with the Bearer scheme.",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "bearer",
+                BearerFormat = "JWT",
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = JwtBearerDefaults.AuthenticationScheme
+                }
+            };
+            c.AddSecurityDefinition(securitySchema.Reference.Id, securitySchema);
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                {
+                        securitySchema, Array.Empty<string>() }
+                });
             });
         }
 
@@ -92,7 +115,7 @@ namespace FundooNotes
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -11,5 +11,6 @@ namespace RepoLayer.Interface
         public UserEntity UserRegister(UserRegisterModel userRegister);
         public string UserLogin(UserLoginModel userLogin);
         public string ForgotPassword(ForgotPasswordModel forgotPassword);
+        public bool ResetPassword(string email, ResetPasswordModel resetPassword);
     }
 }
