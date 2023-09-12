@@ -45,6 +45,10 @@ namespace FundooNotes
             services.AddTransient<IUserRepo, UserRepo>();
             services.AddTransient<IUserBusiness, UserBussiness>();
 
+            //Note Configuration
+            services.AddTransient<INoteBusiness, NoteBusiness>();
+            services.AddTransient<INoteRepo,NoteRepo>();
+
 
             //CONFIGURATION OF JWT AUTHENTICATION:-
             var token = Configuration.GetValue<string>("JwtConfig:key");
