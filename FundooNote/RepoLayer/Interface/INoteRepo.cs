@@ -12,7 +12,7 @@ namespace RepoLayer.Interface
         public NoteEntity UpdateNote(NoteCreateModel noteCreateModel, long UserId, long noteId);
         public NoteEntity CopyNote( long UserId, long noteId);
         public bool IsArchieve(long noteId, long userId);
-
+        public bool IsPin(long noteId, long userId);
 
     }
 }

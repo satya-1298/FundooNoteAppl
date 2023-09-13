@@ -119,5 +119,25 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        public bool IsPin(long noteId, long userId)
+        {
+            try
+            {
+                var result = _fundooContext.Note.FirstOrDefault(x => x.UserId == userId && x.NoteID == noteId);
+                if (result != null)
+                {
+                    result.IsPin = !result.IsPin;
+                    _fundooContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                throw;
+            }
+
+        }
+
     }
 }
