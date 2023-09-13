@@ -114,5 +114,29 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpPut]
+        [Route("IsPin/{noteId}")]
+        public IActionResult PinNote(long noteId)
+        {
+            try
+            {
+                long userId = long.Parse(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+                var result = business.IsPin(noteId, userId);
+                if (result != null)
+                {
+                    return Ok(new { message = "Successfull", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Unsuccessfull", data = result });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
