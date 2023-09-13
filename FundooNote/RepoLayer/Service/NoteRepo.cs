@@ -4,6 +4,7 @@ using RepoLayer.Entity;
 using RepoLayer.Interface;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RepoLayer.Service
@@ -36,6 +37,35 @@ namespace RepoLayer.Service
                 return notes;
             }
             return null;
+        }
+        public NoteEntity UpdateNote(NoteCreateModel noteCreateModel, long UserId,long noteId)
+        {
+            try
+            {
+                var result = _fundooContext.Note.FirstOrDefault(x => x.NoteID == noteId);
+                if (result != null)
+                {
+                    result.Title = noteCreateModel.Title;
+                    result.Description = noteCreateModel.Description;
+                    result.Reminder = noteCreateModel.Reminder;
+                    result.BackGround = noteCreateModel.BackGround;
+                    result.Image = noteCreateModel.Image;
+                    result.IsArchive = noteCreateModel.IsArchive;
+                    result.IsPin = noteCreateModel.IsPin;
+                    result.IsTrash = noteCreateModel.IsTrash;
+                    result.UserId = UserId;
+                    _fundooContext.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

@@ -61,7 +61,7 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
-        [HttpPut]
+        [HttpPost]
         [Route("ForgotPassword")]
         public IActionResult UserForGotPass(ForgotPasswordModel passwordModel)
         {

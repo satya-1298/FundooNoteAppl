@@ -29,6 +29,16 @@ namespace BusinessLayer.Services
             }
 
         }
-    
+        public NoteEntity UpdateNote(NoteCreateModel noteCreateModel, long UserId, long noteId)
+        {
+            try
+            {
+                return noteRepo.UpdateNote(noteCreateModel, UserId, noteId);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
