@@ -101,5 +101,23 @@ namespace RepoLayer.Service
             }
 
         }
+        public bool IsArchieve(long noteId,long userId)
+        {
+            try
+            {
+                var result = _fundooContext.Note.FirstOrDefault(x => x.UserId == userId && x.NoteID == noteId);
+                if (result != null)
+                {
+                    result.IsArchive = !result.IsArchive;
+                    _fundooContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

@@ -11,6 +11,8 @@ namespace RepoLayer.Interface
         public NoteEntity CreateNote(NoteCreateModel model, long UserId);
         public NoteEntity UpdateNote(NoteCreateModel noteCreateModel, long UserId, long noteId);
         public NoteEntity CopyNote( long UserId, long noteId);
+        public bool IsArchieve(long noteId, long userId);
+
 
     }
 }

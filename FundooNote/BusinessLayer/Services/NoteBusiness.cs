@@ -52,6 +52,16 @@ namespace BusinessLayer.Services
                 throw;
             }
         }
-
+        public bool IsArchieve(long noteId, long userId)
+        {
+            try
+            {
+                return noteRepo.IsArchieve(noteId, userId);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
