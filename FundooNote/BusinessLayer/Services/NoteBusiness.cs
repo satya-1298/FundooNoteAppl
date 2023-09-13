@@ -63,5 +63,16 @@ namespace BusinessLayer.Services
                 throw;
             }
         }
+        public bool IsPin(long noteId, long userId)
+        {
+            try
+            {
+                return noteRepo.IsPin(noteId, userId);
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
