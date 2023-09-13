@@ -45,12 +45,36 @@ namespace FundooNotes.Controllers
         [Authorize]
         [HttpPost]
         [Route("Update/{noteId}")]
-        public IActionResult NoteUpdate(NoteCreateModel model,long noteId)
+        public IActionResult NoteUpdate(NoteCreateModel model, long noteId)
         {
             try
             {
                 long userId = long.Parse(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
                 var result = business.UpdateNote(model, userId, noteId);
+                if (result != null)
+                {
+                    return Ok(new { message = "Successfull", data = result });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Unsuccessfull", data = result });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("Copy/{noteId}")]
+        public IActionResult NoteCopy(long noteId)
+        {
+            try
+            {
+                long userId = long.Parse(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+                var result = business.CopyNote( userId, noteId);
                 if (result != null)
                 {
                     return Ok(new { message = "Successfull", data = result });

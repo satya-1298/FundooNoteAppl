@@ -40,5 +40,18 @@ namespace BusinessLayer.Services
                 throw;
             }
         }
+        public NoteEntity CopyNote( long UserId, long noteId)
+        {
+            try
+            {
+                return noteRepo.CopyNote( UserId, noteId);
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
     }
 }

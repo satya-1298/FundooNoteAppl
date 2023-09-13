@@ -67,5 +67,39 @@ namespace RepoLayer.Service
                 throw;
             }
         }
+        public NoteEntity CopyNote(long UserId,long noteId)
+        {
+            try
+            {
+                var result = _fundooContext.Note.FirstOrDefault(x => x.NoteID == noteId && x.UserId == UserId);
+                if (result != null)
+                {
+                    NoteEntity note = new NoteEntity();
+                    note.UserId = UserId;
+                    note.Title = result.Title;
+                    note.Description = result.Description;
+                    note.Reminder = result.Reminder;
+                    note.BackGround = result.BackGround;
+                    note.Image = result.Image;
+                    note.IsArchive = result.IsArchive;
+              
+                    note.IsPin = result.IsPin;
+                    note.IsTrash = result.IsTrash;
+                  
+                    _fundooContext.Note.Add(note);
+                    _fundooContext.SaveChanges();
+                    return result;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch 
+            {
+                return null;
+            }
+
+        }
     }
 }
