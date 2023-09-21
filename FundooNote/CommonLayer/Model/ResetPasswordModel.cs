@@ -9,4 +9,5 @@ namespace CommonLayer.Model
         public string newPassword { get; set; }
         public string conformPassword { get; set; }
     }
+    
 }
