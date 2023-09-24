@@ -14,6 +14,7 @@ namespace RepoLayer.Interface
         public bool IsArchieve(long noteId, long userId);
         public bool IsPin(long noteId, long userId);
         public bool IsTrash(long noteId, long userId);
+        public List<NoteEntity> SearchQuery(long userId, string word);
 
     }
 }
