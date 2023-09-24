@@ -8,7 +8,7 @@ using System.Text;
 
 namespace BusinessLayer.Services
 {
-    public class NoteBusiness:INoteBusiness
+    public class NoteBusiness : INoteBusiness
     {
         private readonly INoteRepo noteRepo;
         public NoteBusiness(INoteRepo noteRepo)
@@ -40,11 +40,11 @@ namespace BusinessLayer.Services
                 throw;
             }
         }
-        public NoteEntity CopyNote( long UserId, long noteId)
+        public NoteEntity CopyNote(long UserId, long noteId)
         {
             try
             {
-                return noteRepo.CopyNote( UserId, noteId);
+                return noteRepo.CopyNote(UserId, noteId);
 
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace BusinessLayer.Services
             {
                 return noteRepo.IsPin(noteId, userId);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -83,6 +83,17 @@ namespace BusinessLayer.Services
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+        public List<NoteEntity> SearchQuery(long userId, string word)
+        {
+            try
+            {
+                return noteRepo.SearchQuery(userId, word);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }
