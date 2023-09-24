@@ -162,6 +162,21 @@ namespace FundooNotes.Controllers
                 throw;
             }
         }
+        [Authorize]
+        [HttpGet("Search/{word}")]
+        public IActionResult SearchNote(string word)
+        {
+            long userId = long.Parse(User.Claims.FirstOrDefault(x => x.Type == "UserId").Value);
+            var result = business.SearchQuery(userId, word);
+            if (result != null)
+            {
+                return Ok(new { message = "Searched Note Successfully", data = result });
+            }
+            else
+            {
+                return BadRequest(new { message = "unSuccessfull" });
+            }
+        }
     }
 
 }
